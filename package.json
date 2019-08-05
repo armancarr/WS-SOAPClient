@@ -1,0 +1,19 @@
+{
+  "name": "ws-soapclient",
+  "version": "1.0.0",
+  "description": "Cliente SOAP para NodeJs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/armancarr/WS-SOAPClient.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/armancarr/WS-SOAPClient/issues"
+  },
+  "homepage": "https://github.com/armancarr/WS-SOAPClient#readme"
+}
