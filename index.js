@@ -1,1 +1,1 @@
-module.exports = require('ws-SopaClient');
+module.exports = require('ws-SoapClient');
