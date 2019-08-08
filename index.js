@@ -3,7 +3,6 @@ var select = require('./xpath').SelectNodes,
   fs = require('fs'),
   utils = require('./utils'),
   xmlToObject = require('./parser').xmlToObject
-
 exports.Http = require('./handlers/client/http.js').HttpClientHandler
 exports.Addr = require('./handlers/client/addressing.js').WsAddressingClientHandler
 exports.Mtom = require('./handlers/client/mtom/mtom.js').MtomClientHandler
@@ -17,6 +16,7 @@ exports.send = send
 exports.addAttachment = addAttachment
 exports.getAttachment = getAttachment
 exports.xmlToObject = xmlToObject
+exports.soapclient = require('./soapclient').SoapClient
 
 function send(handlers, ctx, callback) {
   ensureHasSoapHeader(ctx)
@@ -102,3 +102,5 @@ function getAttachment(ctx, property, xpath) {
 
   return new Buffer.from(elem.firstChild.data, 'base64')
 }
+
+
