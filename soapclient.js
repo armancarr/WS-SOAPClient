@@ -33,10 +33,6 @@ export class SoapClient {
     getSecurity(){
         return this.security
     }
-
-    getCertificate(){
-        return this.certificate
-    }
  
     call = (ctx, logger) =>
     new Promise((resolve, reject) => {
