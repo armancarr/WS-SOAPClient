@@ -1,6 +1,6 @@
-const send = require('./').send
+import { send } from './';
 
-export class SoapClient {
+class SoapClient {
     // ..and an (optional) custom class constructor. If one is
     // not supplied, a default constructor is used instead:
     // constructor() { }
@@ -34,29 +34,31 @@ export class SoapClient {
         return this.security
     }
  
-    call = (ctx, logger) =>
-    new Promise((resolve, reject) => {
-      const newctx = {
-          ...ctx,
-        contentType: 'text/xml',
-        cert: this.certificate.public,
-        key: this.certificate.private,
-      }  
-      send(this.handlers, newctx, (resctx) => {
-        if (logger){  
-            logger.debug(
-            `Biometria-Service:AutenticacionDactilar:Send > Response: ${JSON.stringify(
-                resctx.response
-            )}`
-            
-            )
-        }
-        if (resctx.statusCode === 200) {
-          resolve(resctx.response)
-        } else {
-          reject(new Error(resctx.response))
-        }
+    call (ctx, logger) 
+      {
+      new Promise((resolve, reject) => {
+        const newctx = {
+            ...ctx,
+          contentType: 'text/xml',
+          cert: this.certificate.public,
+          key: this.certificate.private,
+        }  
+        send(this.handlers, newctx, (resctx) => {
+          if (logger){  
+              logger.debug(
+              `Biometria-Service:AutenticacionDactilar:Send > Response: ${JSON.stringify(
+                  resctx.response
+              )}`
+              
+              )
+          }
+          if (resctx.statusCode === 200) {
+            resolve(resctx.response)
+          } else {
+            reject(new Error(resctx.response))
+          }
+        })
       })
-    })
+    }
   }
-  
+export default SoapClient
