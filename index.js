@@ -16,7 +16,7 @@ exports.send = send
 exports.addAttachment = addAttachment
 exports.getAttachment = getAttachment
 exports.xmlToObject = xmlToObject
-exports.SoapClient = require('./soapclient').default.SoapClient
+exports.SoapClient = require('./soapclient').SoapClient
 
 function send(handlers, ctx, callback) {
   ensureHasSoapHeader(ctx)

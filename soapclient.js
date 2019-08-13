@@ -1,4 +1,10 @@
 const send = require('./').send
+const fs=require('fs')
+const Http = require('./handlers/client/http.js').HttpClientHandler
+const X509BinarySecurityToken = require('./handlers/client/security/security.js').X509BinarySecurityToken
+const Signature = require('./handlers/client/security/signature.js').Signature
+const Security = require('./handlers/client/security/security.js').SecurityClientHandler
+
 
 class SoapClient {
     // ..and an (optional) custom class constructor. If one is
@@ -10,15 +16,15 @@ class SoapClient {
             private: fs.readFileSync(certificadoSOAP.privKey).toString(),
             public: fs.readFileSync(certificadoSOAP.pubKey).toString()
         }
-        const x509 = new wsSoapclient.X509BinarySecurityToken({
+        const x509 = new X509BinarySecurityToken({
           key: `${this.certificate.private}\n${this.certificate.public}`,
         })
-        const signature = new wsSoapclient.Signature(x509)
+        const signature = new Signature(x509)
         signature.addReference("//*[local-name(.)='Body']")
         signature.addReference("//*[local-name(.)='Timestamp']")
     
-        this.http = new wsSoapclient.Http()
-        this.security = new wsSoapclient.Security({}, [x509, signature])
+        this.http = new Http()
+        this.security = new Security({}, [x509, signature])
         this.handlers = [this.security, this.http]
 
     }
@@ -46,7 +52,7 @@ class SoapClient {
         send(this.handlers, newctx, (resctx) => {
           if (logger){  
               logger.debug(
-              `Biometria-Service:AutenticacionDactilar:Send > Response: ${JSON.stringify(
+              `Biometria-Service:AutenticacionDactilar:SendAC > Response: ${JSON.stringify(
                   resctx.response
               )}`
               
@@ -61,4 +67,4 @@ class SoapClient {
       })
     }
   }
-module.exports = SoapClient
+exports.SoapClient=SoapClient
