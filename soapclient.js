@@ -1,4 +1,4 @@
-import { send } from './';
+const send = require('./').send
 
 class SoapClient {
     // ..and an (optional) custom class constructor. If one is
@@ -61,4 +61,4 @@ class SoapClient {
       })
     }
   }
-export default SoapClient
+module.exports = SoapClient
