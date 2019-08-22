@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/armancarr/WS-SOAPClient/issues"
   },
-  "homepage": "https://github.com/armancarr/WS-SOAPClient#readme"
+  "homepage": "https://github.com/armancarr/WS-SOAPClient#readme",
+  "dependencies": {
+    "axios": "^0.19.0"
+  }
 }
