@@ -27,13 +27,12 @@ class SoapClient {
         this.security = new Security({}, [x509, signature])
         this.handlers = [this.security, this.http]
         this.options=options
-
     }
     // Si requiere MTOM 
     setHandlers(handlers) {
       this.handlers = handlers
     }
-    setHandlers(request) {
+    setRequest(request) {
       this.request = request
     }
     getHttp(){
@@ -56,6 +55,7 @@ class SoapClient {
         const shouldLog = this.options.log
         const logOperation = this.log
         const debug = this.options.debug
+        const loggerEndPoint = this.options.loggerEndPoint
         const opData = {
           date: new Date().toISOString(),
           status: 'OK',
@@ -75,7 +75,7 @@ class SoapClient {
              }
             }
             if (shouldLog) {
-              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.response).then(() => {
+              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.response,ctx.serviceName,loggerEndPoint).then(() => {
                 resolve(resctx.response)
               })
             } else {
@@ -95,7 +95,7 @@ class SoapClient {
              }
             }
             if (shouldLog) {
-              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.response).then(() => {
+              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.response,ctx.serviceName,loggerEndPoint).then(() => {
                 reject(new Error(resctx.response))
               })
             } else {
@@ -105,26 +105,29 @@ class SoapClient {
         })
       })
     }
-    async log (
+    async log(
       ctx,
       logger,
       op,
       req,
-      res
+      res,
+      serviceName,
+      loggerEP
     ){
+      
       const logRequest = {
         consumer: {
           appConsumer: {
-            id: ctx.appConsumer.id,
-            sessionId: ctx.appConsumer.sessionId,
-            transactionId: ctx.appConsumer.transaccionId,
+            id: ctx.consumer.appConsumer.id,
+            sessionId: ctx.consumer.appConsumer.sessionId,
+            transactionId: ctx.consumer.appConsumer.transaccionId,
           },
           deviceConsumer: {
-            id: ctx.deviceConsumer.id,
+            id: ctx.consumer.deviceConsumer.id,
             ip: ctx.ipAddress,
-            locale: ctx.deviceConsumer.locale,
-            terminalId: ctx.appConsumer.terminalId,
-            userAgent: ctx.deviceConsumer.userAgent,
+            locale: ctx.consumer.deviceConsumer.locale,
+            terminalId: ctx.consumer.appConsumer.terminalId,
+            userAgent: ctx.consumer.deviceConsumer.userAgent,
           },
         },
         documento: {
@@ -132,7 +135,7 @@ class SoapClient {
           tipo: ctx.documento.tipo,
         },
         messages: {
-          idService: ctx.serviceName,
+          idService: serviceName,
           requestService: req,
           responseService: res || 'SIN-DATOS',
         },
@@ -145,7 +148,7 @@ class SoapClient {
         },
       }
       try {
-        await axios.post(this.loggerEndpoint, logRequest)
+        await axios.post(loggerEP, logRequest)
       } catch (error) {
         logger.error(`ClienteSoap:call:logger error: ${error.message}`)
       }
