@@ -25,12 +25,17 @@ class SoapClient {
     
         this.http = new Http()
         this.security = new Security({}, [x509, signature])
+        this.Mtom = new Mtom()
         this.handlers = [this.security, this.http]
         this.options=options
     }
     // Si requiere MTOM 
     setHandlers(handlers) {
-      this.handlers = handlers
+        this.handlers = handlers
+    }
+    setMtom(mtom) {
+      if (mtom)
+        this.handlers = [this.security,this.Mtom, this.http]
     }
     setRequest(request) {
       this.request = request
