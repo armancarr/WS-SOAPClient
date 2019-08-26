@@ -5,6 +5,7 @@ const X509BinarySecurityToken = require('./handlers/client/security/security.js'
 const Signature = require('./handlers/client/security/signature.js').Signature
 const Security = require('./handlers/client/security/security.js').SecurityClientHandler
 const axios = require('axios')
+const Mtom = require('./handlers/client/mtom/mtom.js').MtomClientHandler
 
 class SoapClient {
     // ..and an (optional) custom class constructor. If one is
@@ -32,10 +33,6 @@ class SoapClient {
     // Si requiere MTOM 
     setHandlers(handlers) {
         this.handlers = handlers
-    }
-    setMtom(mtom) {
-      if (mtom)
-        this.handlers = [this.security,this.Mtom, this.http]
     }
     setRequest(request) {
       this.request = request
