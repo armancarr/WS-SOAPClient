@@ -1,22 +1,45 @@
 {
-  "name": "ws-soapclient",
-  "version": "1.0.0",
-  "description": "Cliente SOAP para NodeJs",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "_from": "git+https://github.com/armancarr/WS-SOAPClient.git#develop",
+  "_id": "ws-soapclient@1.0.0",
+  "_inBundle": false,
+  "_integrity": "",
+  "_location": "/ws-soapclient",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "git",
+    "raw": "https://github.com/armancarr/WS-SOAPClient#develop",
+    "rawSpec": "https://github.com/armancarr/WS-SOAPClient#develop",
+    "saveSpec": "git+https://github.com/armancarr/WS-SOAPClient.git#develop",
+    "fetchSpec": "https://github.com/armancarr/WS-SOAPClient.git",
+    "gitCommittish": "develop"
   },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "git+https://github.com/armancarr/WS-SOAPClient.git#5b5694fd087b8e9c7426a32e01761256ceb7f875",
+  "_spec": "https://github.com/armancarr/WS-SOAPClient#develop",
+  "_where": "C:\\Proyectos\\perfil-cliente-service",
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/armancarr/WS-SOAPClient/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "axios": "^0.19.0"
+  },
+  "deprecated": false,
+  "description": "Cliente SOAP para NodeJs",
+  "homepage": "https://github.com/armancarr/WS-SOAPClient#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "ws-soapclient",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/armancarr/WS-SOAPClient.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/armancarr/WS-SOAPClient/issues"
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "homepage": "https://github.com/armancarr/WS-SOAPClient#readme",
-  "dependencies": {
-    "axios": "^0.19.0"
-  }
+  "version": "1.0.0"
 }

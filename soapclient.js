@@ -46,8 +46,8 @@ class SoapClient {
     }
  
     call (ctx,pCtx, logger) 
-      {
-      new Promise((resolve, reject) => {
+    {
+      return new Promise((resolve, reject) => {
         const newctx = {
             ...ctx,
           contentType: 'text/xml',
@@ -62,8 +62,8 @@ class SoapClient {
           date: new Date().toISOString(),
           status: 'OK',
         } 
+        
         send(this.handlers, newctx, (resctx) => {
-
           if (resctx.statusCode === 200) {
             if (debug) {
               if (logger){
@@ -72,12 +72,12 @@ class SoapClient {
                     opData.status
                   }: Ctx=${JSON.stringify(
                     pCtx
-                  )} - Request=${this.request?this.request:resctx.request} - Response=${resctx.response}`
+                  )} - Request=${this.request?this.request:resctx.request} - Response=${resctx.xmlResponse}`
                 )
              }
             }
             if (shouldLog) {
-              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.response,ctx.serviceName,loggerEndPoint).then(() => {
+              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.xmlResponse,ctx.serviceName,loggerEndPoint).then(() => {
                 resolve(resctx.response)
               })
             } else {
@@ -92,16 +92,17 @@ class SoapClient {
                     opData.status
                   }: Ctx=${JSON.stringify(
                     pCtx
-                  )} - Request=${this.request?this.request:resctx.request} - Response=${resctx.response}`
+                  )} - Request=${this.request?this.request:resctx.request} - Response=${resctx.xmlResponse}`
                 )
              }
             }
             if (shouldLog) {
-              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.response,ctx.serviceName,loggerEndPoint).then(() => {
-                reject(new Error(resctx.response))
+              
+              logOperation(pCtx, logger, opData, this.request?this.request:resctx.request, resctx.xmlResponse,ctx.serviceName,loggerEndPoint).then(() => {
+                reject(resctx.response)
               })
             } else {
-              reject(new Error(resctx.response))
+              reject(resctx.response)
             }
           }
         })
@@ -116,20 +117,19 @@ class SoapClient {
       serviceName,
       loggerEP
     ){
-      
       const logRequest = {
         consumer: {
           appConsumer: {
-            id: ctx.consumer.appConsumer.id,
-            sessionId: ctx.consumer.appConsumer.sessionId,
-            transactionId: ctx.consumer.appConsumer.transaccionId,
+            id: ctx.appConsumer.id,
+            sessionId: ctx.appConsumer.sessionId,
+            transactionId: ctx.appConsumer.transaccionId,
           },
           deviceConsumer: {
-            id: ctx.consumer.deviceConsumer.id,
+            id: ctx.deviceConsumer.id,
             ip: ctx.ipAddress,
-            locale: ctx.consumer.deviceConsumer.locale,
-            terminalId: ctx.consumer.appConsumer.terminalId,
-            userAgent: ctx.consumer.deviceConsumer.userAgent,
+            locale: ctx.deviceConsumer.locale,
+            terminalId: ctx.appConsumer.terminalId,
+            userAgent: ctx.deviceConsumer.userAgent,
           },
         },
         documento: {

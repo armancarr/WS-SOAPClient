@@ -273,7 +273,7 @@ function xmlToObject(xml) {
           code + ': ' + string + (detail ? ': ' + JSON.stringify(detail) : '')
         )
         error.root = root
-        throw error
+       // throw error
       }
       return root.Envelope
     }

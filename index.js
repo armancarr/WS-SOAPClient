@@ -28,7 +28,8 @@ function send(handlers, ctx, callback) {
     //some handlers may leave response as a buffer so we need to make sure it is string
     if (ctx.response) {
       ctx.response = ctx.response.toString()
-      const cleanedString = ctx.response
+
+     const cleanedString = ctx.response
         .replace(/<!--[\s\S]*?-->/, '')
         .match(
           /(?:<\?[^?]*\?>[\s]*)?<([^:]*):Envelope([\S\s]*)<\/\1:Envelope>/i
@@ -36,6 +37,7 @@ function send(handlers, ctx, callback) {
       try {
         if (cleanedString) {
           ctx.response = xmlToObject(cleanedString[0])
+          ctx.xmlResponse=cleanedString[0]
         }
       } catch (error) {
         throw new Error(

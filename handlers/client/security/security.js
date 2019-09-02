@@ -227,10 +227,10 @@ X509BinarySecurityToken.prototype.applyMe = function(doc, security) {
       doc,
       "/*[local-name(.)='Envelope']/*[local-name(.)='Header']/*[local-name(.)='Security']"
     )[0],
-    token = utils.appendElement(
+   token = utils.appendElement(
       doc,
       security,
-      security.security_ns,
+      'http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd',
       'o:BinarySecurityToken',
       base64Key
     )

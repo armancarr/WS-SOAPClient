@@ -6,11 +6,12 @@ exports.HttpClientHandler = HttpClientHandler
 
 function HttpClientHandler() {}
 
-HttpClientHandler.prototype.send = function(ctx, callback) {
-  // fs.writeFileSync('logs/soap-request.txt', ctx.request.toString())
+ HttpClientHandler.prototype.send = function(ctx, callback) {
+   //fs.writeFileSync('logs/soap-request.txt', ctx.request.toString())
 
   request.post(
     {
+      
       url: ctx.url,
       body: ctx.request,
       headers: {
